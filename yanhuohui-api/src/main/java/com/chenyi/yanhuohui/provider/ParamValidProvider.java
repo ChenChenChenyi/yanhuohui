@@ -1,6 +1,7 @@
 package com.chenyi.yanhuohui.provider;
 
 import com.chenyi.yanhuohui.common.base.entity.BaseResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import request.User;
 
@@ -17,4 +18,7 @@ public interface ParamValidProvider {
 
     @GetMapping("/getUserByAdvice")
     User getUserByAdvice();
+
+    @GetMapping("/getUserRes")
+    ResponseEntity<User> getUserRes();
 }
