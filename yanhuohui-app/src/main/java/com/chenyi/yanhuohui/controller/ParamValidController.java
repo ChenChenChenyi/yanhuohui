@@ -14,7 +14,6 @@ import sun.misc.ObjectInputFilter;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/paramValid")
 public class ParamValidController implements ParamValidProvider {
 
     @Autowired
