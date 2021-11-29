@@ -57,6 +57,16 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>5.3.6.Final</version>
 		</dependency>
+		<!--redis配置-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+		<!--进行redisTemplate配置时需要此包-->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+		</dependency>
 
 	</dependencies>
 
