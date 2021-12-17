@@ -1,6 +1,7 @@
 package com.chenyi.yanhuohui;
 
 import com.chenyi.yanhuohui.common.base.starter.SpringContextHolder;
+import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
