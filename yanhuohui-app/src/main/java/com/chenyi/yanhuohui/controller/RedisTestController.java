@@ -1,5 +1,6 @@
 package com.chenyi.yanhuohui.controller;
 
+import com.chenyi.yanhuohui.util.redis.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -14,6 +15,8 @@ public class RedisTestController {
     private RedisTemplate redisTemplate;
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    private RedisUtil redisUtil;
 
     @RequestMapping("/getString")
     @Cacheable(value = "springbootredis",key = "#root.methodName")
@@ -25,8 +28,9 @@ public class RedisTestController {
 
     @RequestMapping("/setValue")
     public String setValue(){
-        redisTemplate.opsForValue().set("myName","zhangsan");
+        redisTemplate.opsForValue().set("myName","chenyi");
         stringRedisTemplate.opsForValue().set("yourName","lisi");
+        redisUtil.set("chenyi","dianshanpingtai");
         return "这里分别用redisTemplate和stringRedisTemplate设置了两个键值，方便后面验证一个问题";
     }
 

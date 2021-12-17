@@ -1,4 +1,4 @@
-package com.chenyi.yanhuohui.util.redis;
+package com.chenyi.yanhuohui.configuration;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -30,7 +30,7 @@ public class RedisConfig {
         //2.序列话（一般用于key值）
         RedisSerializer<String>  redisSerializer=new StringRedisSerializer();
         //3.引入json串的转化类（一般用于value的处理）
-        Jackson2JsonRedisSerializer  jackson2JsonRedisSerializer=new Jackson2JsonRedisSerializer(Object.class);
+        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer=new Jackson2JsonRedisSerializer<>(Object.class);
         ObjectMapper objectMapper=new ObjectMapper();
         //3.1设置objectMapper的访问权限
         objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
@@ -54,7 +54,7 @@ public class RedisConfig {
         //1.序列话（一般用于key值）
         RedisSerializer<String> redisSerializer=new StringRedisSerializer();
         //2.引入json串的转化类（一般用于value的处理）
-        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer=new Jackson2JsonRedisSerializer(Object.class);
+        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer=new Jackson2JsonRedisSerializer<>(Object.class);
         ObjectMapper objectMapper=new ObjectMapper();
         //2.1设置objectMapper的访问权限
         objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
