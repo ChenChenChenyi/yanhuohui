@@ -11,7 +11,7 @@ public class HelloController implements HelloProvider {
     @Override
     public BaseResponse helloWorld(String name) {
         System.out.println("Hello " + name + "!");
-        throw new SbcRuntimeException(CommonErrorCode.FAILED,"我自己抛出的错误");
-        //return BaseResponse.SUCCESSFUL();
+        //throw new SbcRuntimeException(CommonErrorCode.FAILED,"我自己抛出的错误");
+        return BaseResponse.SUCCESSFUL();
     }
 }

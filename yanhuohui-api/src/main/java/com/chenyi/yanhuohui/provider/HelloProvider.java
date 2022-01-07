@@ -1,11 +1,12 @@
 package com.chenyi.yanhuohui.provider;
 
 import com.chenyi.yanhuohui.common.base.entity.BaseResponse;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.*;
 
+@FeignClient("yanhuohui")
 public interface HelloProvider {
 
-    @PostMapping("/hello")
+    @RequestMapping("/hello")
     BaseResponse helloWorld(@RequestParam("name") String name);
 }
