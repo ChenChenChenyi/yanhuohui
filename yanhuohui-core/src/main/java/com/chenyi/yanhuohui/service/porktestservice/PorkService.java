@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
-@Service
 public interface PorkService {
     /**
      * 获取猪肉打包实例
