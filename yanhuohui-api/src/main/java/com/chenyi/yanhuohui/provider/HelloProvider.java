@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.*;
 public interface HelloProvider {
 
     @RequestMapping("/hello")
-    BaseResponse helloWorld(@RequestParam("name") String name);
+    BaseResponse helloWorld(@RequestParam("name") String name) throws InterruptedException;
 }
