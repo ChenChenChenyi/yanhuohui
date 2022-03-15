@@ -59,7 +59,10 @@ class UnitTestControllerTest {
     /**
      * 预置数据可直接作为类变量声明,存放是的 购买人和配送地址
      */
-    private final Map<String, Object> mockParams = new HashMap<String, Object>() {{
+    private final Map<String, Object> mockParams = new HashMap<String, Object>() {
+        private static final long serialVersionUID = -4445767487224184431L;
+
+        {
         put("user", "system_user");
     }};
 
