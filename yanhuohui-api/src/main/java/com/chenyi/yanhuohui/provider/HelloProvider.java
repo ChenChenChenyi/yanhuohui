@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.*;
 @FeignClient("yanhuohui")
 public interface HelloProvider {
 
-    @RequestMapping("/hello")
-    BaseResponse helloWorld(@RequestParam("name") String name) throws InterruptedException;
+    @PostMapping("/hello")
+    BaseResponse helloWorld(String name) throws InterruptedException;
 }
