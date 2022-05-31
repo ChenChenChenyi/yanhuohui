@@ -97,6 +97,18 @@
 			<artifactId>java-jwt</artifactId>
 			<version>3.10.3</version>
 		</dependency>
+		<!-- excel导出工具 -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>RELEASE</version>
+		</dependency>
+
 
 	</dependencies>
 

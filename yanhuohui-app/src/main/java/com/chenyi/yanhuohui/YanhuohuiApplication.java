@@ -14,7 +14,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableAsync
-@EnableAspectJAutoProxy
 public class YanhuohuiApplication {
     public static void main(String[] args) {
         SpringApplication.run(YanhuohuiApplication.class, args);
