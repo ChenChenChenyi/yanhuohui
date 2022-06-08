@@ -134,16 +134,16 @@ public class ExcelUtil {
                 Object[] objects = new Object[row.getPhysicalNumberOfCells()];
                 int index = 0;
                 for (Cell cell : row) {
-                    if (cell.getCellType().equals(NUMERIC)) {
+                    if (cell.getCellType().equals(CellType.NUMERIC)) {
                         objects[index] = (int) cell.getNumericCellValue();
                     }
-                    if (cell.getCellType().equals(STRING)) {
+                    if (cell.getCellType().equals(CellType.STRING)) {
                         objects[index] = cell.getStringCellValue();
                     }
-                    if (cell.getCellType().equals(BOOLEAN)) {
+                    if (cell.getCellType().equals(CellType.BOOLEAN)) {
                         objects[index] = cell.getBooleanCellValue();
                     }
-                    if (cell.getCellType().equals(ERROR)) {
+                    if (cell.getCellType().equals(CellType.ERROR)) {
                         objects[index] = cell.getErrorCellValue();
                     }
                     index++;

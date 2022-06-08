@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@Builder
 @NoArgsConstructor
 public class ExcelData {
     private String[] head;
