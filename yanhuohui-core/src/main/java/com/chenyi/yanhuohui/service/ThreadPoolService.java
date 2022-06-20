@@ -17,7 +17,15 @@ public class ThreadPoolService {
     public Future<String> Test1(String name) throws InterruptedException {
         TimeUnit.SECONDS.sleep(1);
         log.info(Thread.currentThread().getName());
-        log.info("异步任务里面的输出：{}。",name);
+        log.info("异步任务test1里面的输出：{}。",name);
+        return new AsyncResult<>("success");
+    }
+
+    @Async("taskExecutor")
+    public Future<String> Test2(String name) throws InterruptedException {
+        TimeUnit.SECONDS.sleep(1);
+        log.info(Thread.currentThread().getName());
+        log.info("异步任务test2里面的输出：{}。",name);
         return new AsyncResult<>("success");
     }
 }
