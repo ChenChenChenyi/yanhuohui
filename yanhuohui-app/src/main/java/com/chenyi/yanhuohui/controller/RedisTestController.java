@@ -22,6 +22,10 @@ public class RedisTestController {
     @Autowired
     private RedisUtil redisUtil;
 
+
+    /**
+     * 接口缓存一般写在service上，这里写在controller只是示例
+     */
     @RequestMapping("/getString")
     @Cacheable(cacheManager = "redisCacheManager", value = "springbootredis",key = "#root.methodName")
     public String getString(){
