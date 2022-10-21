@@ -9,4 +9,7 @@ public interface HelloProvider {
 
     @PostMapping("/hello")
     BaseResponse helloWorld(String name) throws InterruptedException;
+
+    @PostMapping("/print")
+    BaseResponse myprint(String name);
 }

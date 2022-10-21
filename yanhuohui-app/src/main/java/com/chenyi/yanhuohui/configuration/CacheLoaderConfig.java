@@ -1,9 +1,11 @@
 package com.chenyi.yanhuohui.configuration;
 
 import com.github.benmanes.caffeine.cache.CacheLoader;
+import com.zhudekun.Zhu;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
@@ -19,6 +21,7 @@ import static java.util.Objects.requireNonNull;
 
 @Configuration
 @Slf4j
+@Import(Zhu.class)
 public class CacheLoaderConfig {
     /**
      * 生效条件
