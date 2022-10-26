@@ -1,9 +1,8 @@
 package com.chenyi.yanhuohui.service;
 
 import com.chenyi.yanhuohui.service.myinterface.MyFuntionalInterface;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import request.User;
+import com.chenyi.yanhuohui.request.User;
 
 @Service
 public class UserService {

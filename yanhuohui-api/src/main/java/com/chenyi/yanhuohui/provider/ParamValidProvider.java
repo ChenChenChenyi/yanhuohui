@@ -3,7 +3,7 @@ package com.chenyi.yanhuohui.provider;
 import com.chenyi.yanhuohui.common.base.entity.BaseResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import request.User;
+import com.chenyi.yanhuohui.request.User;
 
 import javax.validation.Valid;
 

@@ -1,4 +1,4 @@
-package request;
+package com.chenyi.yanhuohui.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

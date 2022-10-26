@@ -1,15 +1,13 @@
 package com.chenyi.yanhuohui.controller;
 
-import com.alibaba.cloud.sentinel.datasource.converter.JsonConverter;
 import com.chenyi.yanhuohui.esUser.EsUser;
 import com.chenyi.yanhuohui.service.EsUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import request.EsUserSaveRequest;
+import com.chenyi.yanhuohui.request.EsUserSaveRequest;
 
 import java.time.LocalDateTime;
 
