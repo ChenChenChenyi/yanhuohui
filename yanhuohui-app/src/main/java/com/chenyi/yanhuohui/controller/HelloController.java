@@ -66,7 +66,11 @@ public class HelloController implements HelloProvider {
 
     @Override
     public BaseResponse myprint(String name){
-        userService.print(name,s->log.info("函数式接口打印名字"+name));
+        userService.print(name,s->{
+            log.info("函数式接口打印名字"+s);
+            log.info("函数式接口打印名字"+s);
+            log.info("函数式接口打印名字"+s);
+        });
         return BaseResponse.SUCCESSFUL();
     }
 }

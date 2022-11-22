@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.concurrent.TimeUnit;
+
 @Service
 @Slf4j
 public class JpaTransactionService2 {
@@ -24,6 +26,7 @@ public class JpaTransactionService2 {
         try {
             managerRepository.save(Manager.builder().name("chenchen").build()).getId();
             jpaTransactionService.call();
+            TimeUnit.SECONDS.sleep(60);
             //throw new SbcRuntimeException("自己抛出的错误。");
         } catch (Exception e) {
             e.printStackTrace();

@@ -11,5 +11,5 @@ public interface HelloProvider {
     BaseResponse helloWorld(String name) throws InterruptedException;
 
     @PostMapping("/print")
-    BaseResponse myprint(String name);
+    BaseResponse myprint(@RequestParam("name") String name);
 }

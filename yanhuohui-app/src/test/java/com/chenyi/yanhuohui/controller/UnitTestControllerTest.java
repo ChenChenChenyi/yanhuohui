@@ -5,17 +5,22 @@ import com.chenyi.yanhuohui.manager.Manager;
 import com.chenyi.yanhuohui.manager.ManagerRepository;
 import com.chenyi.yanhuohui.manager.PorkInst;
 import com.chenyi.yanhuohui.service.porktestservice.FactoryApi;
+import com.chenyi.yanhuohui.service.porktestservice.PorkService;
 import com.chenyi.yanhuohui.service.porktestservice.WareHouseApi;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.mockito.stubbing.Answer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +29,27 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 
+@ContextConfiguration(classes = {UnitTestController.class})
+@ExtendWith(SpringExtension.class)
 @Slf4j
 class UnitTestControllerTest {
+
+    @MockBean
+    private PorkService porkService;
+
+    @Autowired
+    private UnitTestController unitTestController;
 
     /**
      * controller入口，由于是链路入口，无需用@Spy监听
@@ -47,8 +68,8 @@ class UnitTestControllerTest {
     /**
      * 待Mock的链路环节，下同
      */
-    @Mock
-    private ManagerRepository porkStorageDao;
+//    @Mock
+//    private ManagerRepository porkStorageDao;
 
     @Mock
     private FactoryApi factoryApi;
@@ -63,8 +84,9 @@ class UnitTestControllerTest {
         private static final long serialVersionUID = -4445767487224184431L;
 
         {
-        put("user", "system_user");
-    }};
+            put("user", "system_user");
+        }
+    };
 
     @Before
     public void setup() {
@@ -75,15 +97,16 @@ class UnitTestControllerTest {
         Manager mockStorage = Manager.builder().id(1L).name("40").build();
 
         // 常见Mock写法一：仅试图Mock返回值
-        when(porkStorageDao.findById(269L)).thenReturn(Optional.ofNullable(mockStorage));
+        //when(wareHouseApi.queryPorkSum()).thenReturn(Optional.ofNullable(mockStorage));
+        when(wareHouseApi.queryPorkSum()).thenReturn(10L);
 
         // 常见Mock写法二：不仅试图Mock返回值，还想额外打些日志方便定位
         when(wareHouseApi.packagePork(any(), any()))
                 .thenAnswer(ans -> {
                     log.info("mock log can be written here");
                     return PorkInst.builder()
-                            .weight(ans.getArgument(0,Long.class))
-                            .paramsMap(ans.getArgument(1,Map.class))
+                            .weight(ans.getArgument(0, Long.class))
+                            .paramsMap(ans.getArgument(1, Map.class))
                             .build();
                 });
 
@@ -99,14 +122,26 @@ class UnitTestControllerTest {
         // TODO: 可以加入Mock数据清理或资源释放
     }
 
+    @org.junit.jupiter.api.Test
+    void testBuyPork() throws Exception {
+        MockHttpServletRequestBuilder postResult = MockMvcRequestBuilders.post("/unit-test/buy");
+        MockHttpServletRequestBuilder requestBuilder = postResult.param("weight", String.valueOf(1L));
+        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(this.unitTestController)
+                .build()
+                .perform(requestBuilder);
+        actualPerformResult.andExpect(MockMvcResultMatchers.status().is(400));
+    }
+
     /**
      * 当传入参数为null时，抛出业务异常
      *
      * @throws
      */
-    @Test(expected = SbcRuntimeException.class)
+    //@Test(expected = SbcRuntimeException.class)
+    @org.junit.jupiter.api.Test
     public void testBuyPorkIfWeightIsNull() {
-        porkController.buyPork(null, mockParams);
+        Assertions.assertThrows(SbcRuntimeException.class,() -> porkController.buyPork(null, mockParams));
+        ;
     }
 
     /**
@@ -114,7 +149,7 @@ class UnitTestControllerTest {
      *
      * @throws SbcRuntimeException
      */
-    @Test(expected = SbcRuntimeException.class)
+    @Test
     public void testBuyPorkIfStorageIsShortage() {
         porkController.buyPork(20L, mockParams);
     }

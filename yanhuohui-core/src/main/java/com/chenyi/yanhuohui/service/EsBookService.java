@@ -1,19 +1,19 @@
 package com.chenyi.yanhuohui.service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.chenyi.yanhuohui.bean.BookDTO;
 import com.chenyi.yanhuohui.esbook.Book;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
+import org.elasticsearch.action.admin.indices.analyze.AnalyzeResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
+import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.elasticsearch.search.sort.SortBuilders;
-import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -21,11 +21,8 @@ import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.*;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * ElasticsearchTemplate一些常用API的使用demo
@@ -36,6 +33,9 @@ public class EsBookService {
 
     @Autowired
     private ElasticsearchTemplate elasticsearchTemplate;
+
+    @Autowired
+    private Client client;
 
     public void save(BookDTO bookDTO){
         Book book = new Book();
@@ -48,6 +48,9 @@ public class EsBookService {
 //            String id = "00"+i;
 //            elasticsearchTemplate.index(builder.withObject(new Book(id,i+"号变形金刚","这是讲述汽车人与狂派之间的故事第"+i+"回",10*i)).build());
 //        }
+        //批量插入及刷新
+//        elasticsearchTemplate.bulkIndex(list);
+//        elasticsearchTemplate.refresh(indexName);
     }
 
     public void update(BookDTO bookDTO){
@@ -111,6 +114,21 @@ public class EsBookService {
                 .withHighlightFields(new HighlightBuilder.Field("bookName"));
 
         return elasticsearchTemplate.queryForList(builder.build(),Book.class);
+    }
+
+    //通过分词器获取分词，对应到原生API的请求是http://192.168.0.1:9200/_analyze?analyzer=ik&pretty=true&text=我是中国人，我爱中国
+    public List<String> getTermsByAnalyzer(String text){
+        String content ="我是中国人，我爱中国。";
+        AnalyzeResponse response =client.admin().indices()
+                .prepareAnalyze(content)//内容
+                .setAnalyzer("ik")//指定分词器
+                .execute().actionGet();//执行
+        List<AnalyzeResponse.AnalyzeToken> tokens = response.getTokens();
+        List<String> res = new ArrayList<>();
+        if(CollectionUtils.isNotEmpty(res)){
+            res.addAll(response.getTokens().stream().map(AnalyzeResponse.AnalyzeToken::getTerm).collect(Collectors.toList()));
+        }
+        return res;
     }
 
 }

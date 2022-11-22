@@ -11,6 +11,8 @@ public class BookDTO {
 
     private  String id; //编号
 
+    private  String myId; //编号
+
     private String bookName;  //书名
 
     private String content;     //内容主题

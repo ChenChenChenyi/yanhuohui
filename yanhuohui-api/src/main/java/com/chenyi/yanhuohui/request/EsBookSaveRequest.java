@@ -16,9 +16,11 @@ public class EsBookSaveRequest implements Serializable {
 
     private  String id; //编号
 
+    private  String myId; //编号
+
     private String bookName;  //书名
 
     private String content;     //内容主题
 
-    private int pagecount;      //多少页
+    private  int pagecount;      //多少页
 }

@@ -29,11 +29,12 @@ public class EsBookController {
     @Autowired
     private EsBookService esBookService;
 
+    //使用JPA提供的接口对es进行crud
     @RequestMapping(value = "/save-new-book")
     public void saveNewBook(@RequestBody EsBookSaveRequest esBookSaveRequest){
-        BookDTO bookVO = new BookDTO();
-        BeanUtils.copyProperties(esBookSaveRequest,bookVO);
-        esBookService.save(bookVO);
+        BookDTO bookDTO = new BookDTO();
+        BeanUtils.copyProperties(esBookSaveRequest,bookDTO);
+        esBookService.save(bookDTO);
     }
 
     @RequestMapping(value = "/update-book")
@@ -68,4 +69,6 @@ public class EsBookController {
         List<Book> books = esBookService.queryBuilder(bookDTO);
         return BaseResponse.success(books);
     }
+
+
 }
