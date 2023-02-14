@@ -1,5 +1,6 @@
 package com.chenyi.yanhuohui.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,10 +11,13 @@ import java.io.IOException;
 
 @RestController
 public class UploadFileController {
+
     @PostMapping("/upload")
     public Object upload(@RequestParam("file") MultipartFile file){
         return saveFile(file);
     }
+
+
     @PostMapping("/multiUpload")
     public Object multiUpload(@RequestParam("file")MultipartFile[] files){
         System.out.println("文件的个数:"+files.length);
@@ -22,6 +26,7 @@ public class UploadFileController {
         }
         return "ok";
     }
+
 
     private Object saveFile(MultipartFile file){
         if (file.isEmpty()){

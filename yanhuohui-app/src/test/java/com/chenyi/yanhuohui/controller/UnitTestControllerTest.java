@@ -18,6 +18,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -41,15 +42,15 @@ import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 
 @ContextConfiguration(classes = {UnitTestController.class})
-@ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
 @Slf4j
 class UnitTestControllerTest {
 
-    @MockBean
+    @InjectMocks
     private PorkService porkService;
 
-    @Autowired
-    private UnitTestController unitTestController;
+//    @Autowired
+//    private UnitTestController unitTestController;
 
     /**
      * controller入口，由于是链路入口，无需用@Spy监听
@@ -76,6 +77,7 @@ class UnitTestControllerTest {
 
     @Mock
     private WareHouseApi wareHouseApi;
+
 
     /**
      * 预置数据可直接作为类变量声明,存放是的 购买人和配送地址
@@ -122,15 +124,15 @@ class UnitTestControllerTest {
         // TODO: 可以加入Mock数据清理或资源释放
     }
 
-    @org.junit.jupiter.api.Test
-    void testBuyPork() throws Exception {
-        MockHttpServletRequestBuilder postResult = MockMvcRequestBuilders.post("/unit-test/buy");
-        MockHttpServletRequestBuilder requestBuilder = postResult.param("weight", String.valueOf(1L));
-        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(this.unitTestController)
-                .build()
-                .perform(requestBuilder);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().is(400));
-    }
+//    @org.junit.jupiter.api.Test
+//    void testBuyPork() throws Exception {
+//        MockHttpServletRequestBuilder postResult = MockMvcRequestBuilders.post("/unit-test/buy");
+//        MockHttpServletRequestBuilder requestBuilder = postResult.param("weight", String.valueOf(1L));
+//        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(this.unitTestController)
+//                .build()
+//                .perform(requestBuilder);
+//        actualPerformResult.andExpect(MockMvcResultMatchers.status().is(400));
+//    }
 
     /**
      * 当传入参数为null时，抛出业务异常
@@ -151,7 +153,8 @@ class UnitTestControllerTest {
      */
     @Test
     public void testBuyPorkIfStorageIsShortage() {
-        porkController.buyPork(20L, mockParams);
+        //porkController.buyPork(100L, mockParams);
+        Assertions.assertThrows(SbcRuntimeException.class,() -> porkController.buyPork(100L, mockParams));
     }
 
     /**

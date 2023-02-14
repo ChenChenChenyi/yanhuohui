@@ -1,5 +1,8 @@
 package com.chenyi.yanhuohui.manager;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -14,4 +17,9 @@ public interface ManagerRepository extends JpaRepository<Manager,Long>, JpaSpeci
     //这里将猪肉总量存在了manager表中，只是为了测试而已。
     @Query(nativeQuery = true,value = "select m.role from manager m where name = 'pork'")
     String queryPork();
+
+
+    Page<Manager> findAll(Pageable pageable);
+
+
 }

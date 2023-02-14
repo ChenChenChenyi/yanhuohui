@@ -131,6 +131,8 @@ public class RedisConfig {
                     @Override
                     public Map<Integer, String> loadAll(Iterable<? extends Integer> keys) {
                         Map<Integer, String> map = new HashMap<>();
+                        List<String> s = new ArrayList<>();
+                        s.add("chenyi");
                         for (Integer i : keys) {
                             map.put(i, i.toString());
                         }
