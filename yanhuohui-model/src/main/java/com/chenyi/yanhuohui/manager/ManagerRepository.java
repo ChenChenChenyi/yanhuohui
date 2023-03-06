@@ -18,7 +18,7 @@ public interface ManagerRepository extends JpaRepository<Manager,Long>, JpaSpeci
     @Query(nativeQuery = true,value = "select m.role from manager m where name = 'pork'")
     String queryPork();
 
-
+    @Override
     Page<Manager> findAll(Pageable pageable);
 
 

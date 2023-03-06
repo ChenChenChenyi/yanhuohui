@@ -9,7 +9,17 @@ import java.util.Map;
  */
 public interface WareHouseApi {
 
+    /**
+     * 查询仓库猪肉总量
+     * @return
+     */
     Long queryPorkSum();
 
+    /**
+     *
+     * @param weight
+     * @param params
+     * @return
+     */
     PorkInst packagePork(Long weight, Map<String, Object> params);
 }

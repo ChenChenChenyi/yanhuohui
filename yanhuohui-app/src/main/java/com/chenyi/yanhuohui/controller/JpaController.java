@@ -6,6 +6,8 @@ import com.chenyi.yanhuohui.manager.Manager;
 import com.chenyi.yanhuohui.manager.ManagerRepository;
 import com.chenyi.yanhuohui.request.ManagerQueryRequest;
 import com.chenyi.yanhuohui.service.DataTransportService;
+import com.chenyi.yanhuohui.util.uuid.GlobalOrderNumberSequenceGenerator;
+import com.chenyi.yanhuohui.util.uuid.PrefixTimeFormatSequenceGenerator;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.springframework.beans.BeanUtils;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +24,6 @@ import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping(value = "/jpa")
-//@AllArgsConstructor
 public class JpaController {
 
     @Autowired
@@ -29,6 +31,9 @@ public class JpaController {
 
     @Autowired
     private DataTransportService dataTransportService;
+
+    @Resource(name = "prefixTimeFormatSequenceGenerator")
+    private PrefixTimeFormatSequenceGenerator prefixTimeFormatSequenceGenerator;
 
 //    @Autowired
 //    void setManagerRepository(ManagerRepository managerRepository) {
@@ -39,8 +44,16 @@ public class JpaController {
     public String findAll(){
         List<Manager> list = managerRepository.findAll();
         System.out.println(list);
+        String seq = prefixTimeFormatSequenceGenerator.getSequence();
+        System.out.println(seq);
         return list.toString();
         //return BaseResponse.SUCCESSFUL();
+    }
+
+    @PostMapping(value = "/getId")
+    public String getId(){
+        String seq = prefixTimeFormatSequenceGenerator.getSequence();
+        return seq;
     }
 
     @PostMapping(value = "/find-by-name")
