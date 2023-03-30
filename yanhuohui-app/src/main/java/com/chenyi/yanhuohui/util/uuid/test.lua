@@ -12,3 +12,5 @@ tab1.key1 = nil
 for k, v in pairs(tab1) do
     print(k .. " - " .. v)
 end
+
+-- dsfdasfasfsafasf
