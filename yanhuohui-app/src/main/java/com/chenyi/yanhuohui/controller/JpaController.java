@@ -12,6 +12,8 @@ import lombok.AllArgsConstructor;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +45,7 @@ public class JpaController {
     @PostMapping(value = "/find-all")
     public String findAll(){
         List<Manager> list = managerRepository.findAll();
+        Page<Manager> page = managerRepository.findAll(PageRequest.of(0,10));
         System.out.println(list);
         String seq = prefixTimeFormatSequenceGenerator.getSequence();
         System.out.println(seq);
